@@ -1,0 +1,70 @@
+<h4 class="tags-title-bar">按标签浏览</h4>
+<ul class="list-inline tags-ul">	    
+	{volist name="tagsres" id="vo" empty="暂时没有数据！"}
+		<li>
+			<a class="label" href="__ROOT__/index/tags/index?tag={$vo.tag}" title="{$vo.tag}" >
+				{$vo.tag}({$vo.count})
+			</a>
+		</li>
+	{/volist}
+</ul>
+
+<div class="container-fluid" style="padding: 0;">
+  <!-- <h4 class="page-header">选项卡内容</h4> -->
+  <!--tabs-left:选项卡在左边显示  -->
+  <div class="tabbable" id="aside-nav-tabs">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">最新文章</a></li>
+        <li><a href="#tab2" data-toggle="tab">热门文章</a></li>
+        <li><a href="#tab3" data-toggle="tab">推荐文章</a></li>
+    </ul>
+    <div class="tab-content">  						 
+      <div class="tab-pane active" id="tab1">   
+        <ul class="list-group">
+          {volist name="newblog" id="vo" empty="暂时没有数据"} 
+          	<li class="list-group-item">
+				  		<span class="list-style">{$i}</span>  
+				   		<a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.stitle}">{$vo.stitle}</a>
+				   		<span class="badge" style="background: #fff;color: #000;">{$vo.time|date="y.m.d",###}</span>
+				  	</li>
+          {/volist}
+        </ul>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <ul class="list-group">
+          {volist name="hotblog" id="vo" empty="暂时没有数据"} 
+  	        <li class="list-group-item">
+				  		<span class="list-style">{$i}</span>
+				   		<a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.stitle}">{$vo.stitle}</a><span class="badge">点击量:{$vo.click}</span>
+				  	</li>
+          {/volist}
+        </ul>
+      </div>
+      <div class="tab-pane" id="tab3">
+        <ul class="list-group">
+        	{volist name="hotblog" id="vo" empty="暂时没有数据"} 
+				  	<li class="list-group-item">
+				  		<span class="list-style">{$i}</span>
+				   		<a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.stitle}">{$vo.stitle}</a><span class="badge">{$vo.click}</span>
+				  	</li>
+				  	{/volist}
+				</ul>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="list-group">
+  	<li class="list-group-item active">
+    	<h5 class="list-group-item-heading">最新留言</h5>
+    	<!-- <p class="list-group-item-text">...</p> -->
+  	</li>
+  	<li class="list-group-item">
+   		<a href="">the first article</a><span class="badge">14</span>
+  	</li>
+  	<li class="list-group-item">
+   		<a href="">the second article</a><span class="badge">35</span>
+  	</li>
+  	<li class="list-group-item">
+   		<a href="">the third article</a><span class="badge">26</span>
+  	</li>
+</ul>

@@ -1,0 +1,3 @@
+<?php
+//000000086400a:5:{i:0;a:6:{s:3:"cid";i:1;s:8:"catename";s:9:"大生活";s:12:"catekeywords";s:12:"记录生活";s:8:"catedesc";s:12:"记录生活";s:4:"sort";i:1;s:8:"catetype";i:0;}i:1;a:6:{s:3:"cid";i:2;s:8:"catename";s:12:"光影斑斓";s:12:"catekeywords";s:12:"光影斑斓";s:8:"catedesc";s:12:"光影斑斓";s:4:"sort";i:2;s:8:"catetype";i:0;}i:2;a:6:{s:3:"cid";i:4;s:8:"catename";s:9:"如是观";s:12:"catekeywords";s:9:"如是观";s:8:"catedesc";s:9:"如是观";s:4:"sort";i:3;s:8:"catetype";i:0;}i:3;a:6:{s:3:"cid";i:7;s:8:"catename";s:9:"圈圈说";s:12:"catekeywords";s:9:"圈圈说";s:8:"catedesc";s:9:"圈圈说";s:4:"sort";i:4;s:8:"catetype";i:0;}i:4;a:6:{s:3:"cid";i:6;s:8:"catename";s:9:"留言本";s:12:"catekeywords";s:9:"留言本";s:8:"catedesc";s:9:"留言本";s:4:"sort";i:5;s:8:"catetype";i:1;}}
+?>

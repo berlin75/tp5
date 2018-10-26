@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="{$Think.config.webinfor.keyword}">
+<meta name="description" content="{$Think.config.webinfor.description}">
+<meta name="Author" content="{$Think.config.webinfor.webname}">
+<meta name="renderer" content="webkit">
+<meta name="baidu_union_verify" content="{$Think.config.webinfor.baiduu}">
+<meta name="google-site-verification" content="{$Think.config.webinfor.googlev}">
+<meta name="baidu-site-verification" content="{$Think.config.webinfor.baiduv}">
+<meta name="sogou_site_verification" content="{$Think.config.webinfor.sogouv}">
+<meta name="360-site-verification" content="{$Think.config.webinfor.360v}">
+<link rel="shortcut icon" href="__PUBLIC__/static/favicon.ico" />
+<link rel="bookmark" href="__PUBLIC__/static/favicon.ico" type="image/x-icon"/>
+<title>{block name="title"}{$Think.config.webinfor.webname}{/block}</title>
+{css file="__PUBLIC__/static/common/jquery-3.1.1.js" /}
+{css file="__PUBLIC__/static/common/bootstrap/css/bootstrap.min.css" /}
+{block name="cssjs"}{/block}
+{block name="ueditor"}
+	{include file="public/ueditor" /}
+{/block}
+
+</head>
+<body>
+	<header>
+		{include file="public/nav" /}
+	</header>
+	<main class="container-fluid row">
+		<div class="sidebar"> 菜单导航>></div>
+		</div>
+		<aside class="col-md-2" style="border-right: 1px solid rgba(0,0,0,.2);">
+			{include file="public/aside" /}
+		</aside>
+		<section class="col-md-10">
+			{block name="section"}网站主体左侧{/block}
+		</section>	
+	</main>
+	<footer class="container-fluid">
+		<div class="text-center copyright" style="font-family:Arial;">Copyright©2016All Rright Reserved</div>
+	</footer>
+	{js file="__PUBLIC__/static/common/bootstrap/js/bootstrap.min.js" /}
+	<script>
+		$('.sidebar').click(function(){  //响应式侧边栏
+			$('aside').fadeToggle();
+		});
+	</script>
+
+<!-- 手风琴式侧边导航菜单 -->
+	 <script>
+		$(function(){
+		 	$(".menu>li>span").click(function(){
+		 		$(this).addClass("menuactive").parent().siblings().children("span").removeClass("menuactive");
+		 		$(this).next("ul").slideToggle(); 
+		 		$(this).parent().siblings().children("ul").slideUp(); 
+		 	}); 
+		 });
+	 </script>
+</body>
+</html>

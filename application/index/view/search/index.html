@@ -1,0 +1,83 @@
+{extend name="public/base" /}
+
+{block name="title"}搜索结果-{__block__}{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/index/css/base.css" /}
+{/block}
+
+{block name="section"}
+	<ol class="breadcrumb">
+	  <li><a href="{:url('index/index')}"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+	  <li>搜索关键词 <font color="red">{$keyword}</font> 共用 <font color="red">{$searchrescount}</font> 条纪录：</li>
+	</ol>
+	<form action="{:url('search/index')}" method="post" onsubmit="return checkinput();" id="searchform">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="search" class="form-control" name="keyword" size="26" title="Enter keyword(s), then press enter" placeholder="关键词..."/>
+				<div class="input-group-btn">
+		        	<input type="submit" class="btn btn-primary" id="searchformbtn" title="搜索" value="搜索">
+	      		</div>
+			</div>
+			<p>热搜关键词: 
+				{volist name="hotkeywords" id="vo"}
+					<font color="red"> {$vo.keyword} </font> 
+				{/volist}
+			</p>
+		</div>
+	</form>
+	<div class="searchres">
+		<ul>
+			{volist name="searchres" id="vo" empty="暂无数据！"}
+				<li>
+					<div class="title-time">
+						<h4><a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">{$vo.title}</a></h4>
+						<small>{$vo.time|date='Y年m月d日',###}</small>
+					</div>
+					<p>{$vo.blogdesc}</p>
+					<div class="text-right">
+						<a class="btn btn-success btn-xs" href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">阅读全文 ></a>
+					</div>
+				</li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="prenext">
+		<span class="pre"><a href="" ><<上一篇</a></span>
+		<span class="next"><a href="" >下一篇>></a></span>
+	</div>
+
+{/block}
+
+{block name="asidesearch"}{/block}
+
+{block name="aside"}{__block__}{/block}
+
+{block name="asiderelative"}{/block}
+
+{block name="js"}
+	<script>
+		function checkinput(){
+			var keyword = $('input[name=keyword]').val();
+			var flag = false;
+
+			if(keyword == ''){
+				alert('请输入正确的关键词！');
+				flag = false;
+			}else if(keyword.length > 25){
+				alert('关键词不能超过25个字符！');
+				flag = false;
+			}else{
+				flag = true;
+			}
+
+			return flag;
+		}
+
+		//页面刷新之后再次搜索的事件间隔
+		$('#searchformbtn').attr('disabled', 'disabled').attr('title', '5秒之后才能再次搜索');
+		setTimeout(function(){ 
+			$('#searchformbtn').removeAttr('disabled').attr('title', '搜索');
+		},{$Think.config.settime.searchtime}*1000);
+	</script>
+{/block}

@@ -1,0 +1,38 @@
+{extend name="public/base" /}
+
+{block name="title"}添加栏目模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('cate/catelist')}">栏目管理</a> > 新增栏目</p>
+	<div class="wrap">	
+		<table class="addtb table">
+			<form action="" method="post" name="addcateform" >
+			<tr>
+				<td width="50%" class="lefttd"><font color="red">* </font>栏目名称</td>
+				<td><input type="text" name="catename" ></td>
+			</tr><tr>
+				<td class="lefttd"><font color="red">* </font>栏目类型</td>
+				<td>					
+					<input type="radio" value="0" checked="checked" id="lanmu" name="catetype">
+					<label for="lanmu" >列表栏目</label>
+					<input type="radio" value="1"  id="liuyan" name="catetype">
+					<label for="liuyan" >留言栏目</label>
+				</td>
+			</tr><tr>
+				<td class="lefttd">关键词</td>
+				<td><input type="text" name="catekeywords" ></td>
+			</tr><tr>
+				<td class="lefttd">栏目描述</td>
+				<td><input type="text" name="catedesc" ></td>
+			</tr><tr>
+				<td colspan=2 class="confirm"><input type="submit" value="确认添加" ></td>
+			</tr>
+			</form>
+		</table>
+	</div>
+{/block}

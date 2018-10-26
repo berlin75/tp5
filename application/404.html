@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="{$Think.config.webinfor.keyword}">
+<meta name="description" content="{$Think.config.webinfor.description}">
+<meta name="Author" content="{$Think.config.webinfor.webname}">
+<meta name="renderer" content="webkit">
+<meta name="baidu_union_verify" content="{$Think.config.webinfor.baiduu}">
+<meta name="google-site-verification" content="{$Think.config.webinfor.googlev}">
+<meta name="baidu-site-verification" content="{$Think.config.webinfor.baiduv}">
+<meta name="sogou_site_verification" content="{$Think.config.webinfor.sogouv}">
+<meta name="360-site-verification" content="{$Think.config.webinfor.360v}">
+<link rel="shortcut icon" href="__PUBLIC__/static/favicon.ico" />
+<link rel="bookmark" href="__PUBLIC__/static/favicon.ico" type="image/x-icon"/>
+<title>页面错误404-{$Think.config.webinfor.webname}</title>
+{js file="__PUBLIC__/static/common/jquery-3.1.1.js" /}
+{css file="__PUBLIC__/static/common/bootstrap/css/bootstrap.min.css" /}
+{css href="__PUBLIC__/static/index/css/base.css" /}
+</head>
+<body>
+	<header id="top">
+		{include file="public/nav" /}
+	</header>
+	<main class="container">
+		<h1>404!</h1>
+		<h4>抱歉！该页面无法访问……</h4>
+		<h4><b>此处为世界尽头</b></h4>
+		<h4><b>请穿越回首页吧</b></h4>
+		<p>可能因为：</p>
+		<p>网址有错误，请检查地址是否完整或存在多余的字符</p>
+		<p>网址已失效，可能页面已删除，活动已下线等</p>
+		<p><a class="btn btn-warning btn-lg" href="{:url('index/index/index')}">返回首页</a></p>
+		
+	</main>
+	<footer id="bottom">
+		<div class="container">
+			{include file="public/footer" /}
+		</div>
+	</footer>
+	{js file="__PUBLIC__/static/common/bootstrap/js/bootstrap.min.js" /}
+	
+</body>
+</html>

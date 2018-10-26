@@ -1,0 +1,72 @@
+ {extend name="public/base" /}
+
+{block name="title"}
+	{if condition="isset($tag)"}{$tag}{else/}{$catename}{/if}-{__block__}
+{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/index/css/base.css" /}
+{/block}
+
+{block name="section"}
+	<ol class="breadcrumb">
+	    <li><a href="{:url('index/index')}"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+	    <li class="active">
+	    	{if condition="isset($tag)"}包含标签 <mark><font color="red">{$tag}</font></mark> 的文章
+	    	{else/}{$catename}
+	    	{/if}
+	    </li>
+	</ol>
+
+	<ul class="list-ul">			
+	{volist name="blog" id="vo"}
+		<li>
+			<div class="title-time">
+				<h3><a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">{$vo.title}</a></h3>
+				<small>{$vo.time|date='Y年m月d日',###}</small>
+			</div>
+			<div class="desc-pic row">				
+				{if condition='$vo.pic'}
+				    <div class="col-md-3">
+				    	<a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">
+				       		<img src="__PUBLIC__/static/uploads/{$vo.pic|strstr=' ',true|trim}" class="list-img" alt="{$vo.picdesc}" title="{$vo.picdesc}" />
+				        </a>
+				    </div>
+				{/if}
+				<div {if condition='$vo.pic'} class="col-md-9" {/if}>
+					{$vo.blogdesc}……
+					<div class="text-right">
+						<a class="btn btn-success" href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">阅读全文 ></a>
+					</div>
+				</div>
+			</div>
+			<div class="art-tags"><span class="glyphicon glyphicon-tags" style="color: red;"> Tags:</span>
+
+			<?php 
+				$arr=explode(' ',$vo['blogkeywords']);
+				foreach($arr as $k=>$v){ 
+					echo "<a href='__ROOT__/index/tags/index/tag/$v' title=$v>$v</a> ";
+				}
+			?>
+			</div>
+			<div class="art-info">
+				<span>发布：圈圈 | 分类：{$catename?$catename:$vo.catename;} | 评论：23 | 浏览：{$vo.click} |</span>
+			</div>
+		</li>
+	{/volist}
+</ul>
+{$blog->render()}
+{/block}
+
+{block name="asidesearch"}{__block__}{/block}
+
+{block name="aside"}{__block__}{/block}
+
+{block name="asiderelative"}{/block}
+
+{block name="js"}
+
+{/block}
+
+
+

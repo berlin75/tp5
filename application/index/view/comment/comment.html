@@ -1,0 +1,48 @@
+{extend name="public/base" /}
+
+{block name="title"}首页模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/index/css/base.css" /}
+{/block}
+
+{block name="section"}
+	<article>
+			<h2>留言本</h2>
+			<p class="logeinfo">你我网，源自圈圈说，记载着你我的生活过往，只为留住那方曾经的感动。</p>
+			<ul class="commentlist">
+				<li class="clear">
+					<div class="userimage"><img src="__PUBLIC__/static//index/image/user.png" /></div>
+					<div class="commentinfo">
+						<p class="username">berlin</p>
+						<p class="time"><small>发布于 2017.6.10 21:11</small></p>
+						<p class="content">留言内容</p>
+					</div>
+				</li>
+				<li class="clear">
+					<div class="userimage"><img src="__PUBLIC__/static//index/image/user.png" /></div>
+					<div class="commentinfo">
+						<p class="username">berlin</p>
+						<p class="time">发布于 2017.6.10 21:11 </p>
+						<p class="content">第一次留言：留言内容</p>
+					</div>
+				</li>
+			</ul>
+		</article>
+{/block}
+
+{block name="asidesearch"}{__block__}{/block}
+
+{block name="aside"}{__block__}{/block}
+
+{block name="asiderelative"}{/block}
+
+{block name="js"}
+
+{/block}
+
+
+
+
+
+

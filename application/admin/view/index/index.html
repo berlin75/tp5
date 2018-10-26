@@ -1,0 +1,80 @@
+{extend name="public/base" /}
+
+{block name="title"}后台首页模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome" style="border-bottom: 1px solid rgba(128,128,128,0.3);">欢迎收看童老师thinkPHP视频教程 
+		<a href="#" ><font color="red">点击观看视频教程</font></a>
+	</p>
+	<div class="wrap">
+		<ul class="list-inline">
+			<li><a class="btn btn-default" href="{:url('blog/addblog')}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新建博文</a></li>
+			<li><a class="btn btn-default" href="{:url('cate/addcate')}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增栏目</a></li>
+		</ul>	
+	</div>
+	<div class="table-responsive">
+		<p class="titlebar"><b>系统基本信息</b></p>
+		<table class="table table-condensed">
+			<tr><td align="right">操作系统:</td><td>{$Think.server.HTTP_USER_AGENT}</td></tr>
+			<tr><td align="right">运行环境::</td><td>wamp3.0.0</td></tr>
+			<tr><td align="right">PHP运行方式:</td><td>{$Think.server.SERVER_SOFTWARE}</td></tr>
+			<tr><td align="right">版本信息:</td><td>thinkphp{$Think.THINK_VERSION}</td></tr>
+			<tr><td align="right">上传附件限制:</td><td>2M</td></tr>
+			<tr><td align="right">北京时间:</td><td>{$Think.server.REQUEST_TIME|date="Y-m-d H:i:s",###}</td></tr>
+			<tr><td align="right">服务器域名/ip:</td><td>{$Request.ip}</td></tr>
+			<tr><td align="right">host:</td><td>{$Think.server.HTTP_HOST}</td></tr>
+		</table>
+	</div>
+	<div class="wrap">
+		<p class="titlebar">使用帮助</p>
+		<p>thinkphp交流群：465137869</p>
+	</div>
+	<div class="contaainer-fluid">
+		<hr/><p>TODO:</p>
+		<ol>
+			<li>关闭调试模式'app_debug' => false,404页面生效</li>
+			<li>数据库配置，模板上传目录修改，ueditor上传修改config.json</li>
+			<li>网站统计信息工具，网站认证，百度广告联盟</li>
+			<li>https://connect.qq.com/manage.html#/</li>
+
+			<li>网站地图，关于我们，法律条款，帮助中心等单页面，文章评论，robot，搜索</li>
+			<li>头像缩略图截取区域</li>
+
+			<li>前端文章收藏写入了数据库，怎么防止用户频繁的收藏和取消，或者是写入session</li>
+
+			<li>防止用户恶意频繁访问数据库：做好数据库并发，设置内容缓存，限制访问时间间隔(用户体验差)、验证码，自动限制恶意ip访问频率，重复内容判断，无效内容判断</li>
+			<li>防止站外提交、恶意注册、恶意攻击，设置间隔，用户可以禁用js和cookie</li>
+			<li>考虑服务器压力，防止频繁读写数据库，无法显示网页、目前访问网站的用户过多</li>
+			<li>考虑服务器压力，一些前端后台都能处理的任务交给前端处理</li>
+			<li>高并发：多个客户端同时调用数据库数据，没有缓存的情况下，mysql是怎么处理的</li>
+
+			<li>mysql怎么自动删除超过3天的数据:1.通过触发器来删。给这个表建立一个触发器，每当有insert或者update的时候，就触发一条sql，这个sql就是删除过期的数据; 2.写程序加到crontab里面，让定时执行，然后去删; 3.mysql中有个event定时处理机制,写个删除数据的存储过程  ，让event定时调用这个存储过程; 4.delete from table_name where endTime=curdate(); 4.1.程序中处理： 在你的程序中有对某个表的insert操作的地方，在insert操作完成之后，查询该表的记录数，如果超过你设定的数量，则把用delete操作将前面的数据删除。 2.数据库触发器： 一般数据库系统都是支持“触发器trigger”的，你可数据库中创建一个 当insert操作时触发的触发器</li>
+			<li>The system limits the search interval of 10 seconds,and later search</li>
+			<li>
+				<pre>
+					btn.onclick = function() {
+						this.disabled = 'disabled';
+						setTimeout(function() {
+							btn.disabled = '';
+						}, 1000);//1秒后才能点击
+					};
+
+					//er
+					input id="btn" type="button" onclick="test(this)" value="test" 					
+					function test(t){
+						var i=1;
+						t.disabled=true;
+						var timer=setInterval(function(){t.value="test"+i;i++;
+						if(i>4){t.disabled=false;i=1;t.value="test";clearInterva(timer)}},1000)
+					}
+					
+				</pre>
+			</li>
+
+		</ol>
+	</div>
+{/block}

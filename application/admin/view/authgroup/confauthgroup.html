@@ -1,0 +1,46 @@
+{extend name="public/base" /}
+
+{block name="title"}配置用户组权限模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+	<script>
+		$(document).ready(function(){
+			$('.parentrule').click(function(){  
+				var inputs=$(this).parents('.maprule').find('.sonrule'); 
+				// $(this).attr('checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
+				$(this).is(':checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
+			});
+		});
+	</script>
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('authgroup/authgrouplist')}">用户组管理</a> > 配置【{$authgroup.title}】用户组权限</p>
+	<div class="wrap">	
+		<form action="" method="post"  >		
+			{volist name="authrule" id="pvo"}
+				<div class="maprule">
+					<p>
+						<input type="checkbox" name="rules[]" value="{$pvo.id}" id="rule{$pvo.id}"  {eq name="$pvo.confed" value="1" } checked="checked" {/eq} class="parentrule">
+						<label for="rule{$pvo.id}">{$pvo.id}.{$pvo.title}-{$pvo.pid}</label>
+					</p>
+					<ul>
+						{volist name="$pvo.child" id="vo"}
+							<li>
+								<input type="checkbox" name="rules[]" value="{$vo.id}" id="rule{$vo.id}" {eq name="$vo.confed" value="1" } checked="checked" {/eq} class="sonrule">
+								<label for="rule{$vo.id}" >{$vo.id}.{$vo.title}-{$vo.pid}</label>
+							</li>
+						{/volist}
+					</ul>
+				</div>
+			{/volist}			
+			<p class="confirm">
+				<input type="submit" class="btn btn-primary" value="保存配置">
+				<input type="button" class="btn btn-default" value="返回用户组列表" onclick="return history.go(-1)">
+			</p>		
+			<table class="addtb table"></table>
+		</form>
+	</div>
+{/block}

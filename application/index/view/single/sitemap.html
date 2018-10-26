@@ -1,0 +1,42 @@
+{extend name="public/base" /}
+
+{block name="title"}站点地图-{__block__}{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/index/css/base.css" /}
+	<style>
+		.mapart{height: 300px;margin-bottom: 2rem;;border-top: 2px solid #458fce;border-left: 1px solid #d6dbe1;border-right: 1px solid #d6dbe1;border-bottom: 1px solid #d6dbe1;}
+		.maph2{border-bottom: 1px solid #d6dbe1;padding: 0 0 1rem 1rem;}
+		.mapul{padding: 0 1rem;}
+	</style>
+{/block}
+
+{block name="section"}
+	<h3 class="text-center">站点地图</h3>
+	<article class="mapart">
+		<h4 class="maph2">分类链接</h4>
+		<ul class="mapul">
+			<li><a href="">link1</a></li>
+			<li><a href="">link2</a></li>
+			<li><a href="">link3</a></li>
+		</ul>
+	</article>
+	<article class="mapart">
+		<h4 class="maph2">分类链接</h4>
+		<ul class="mapul">
+			<li><a href="">link1</a></li>
+			<li><a href="">link2</a></li>
+			<li><a href="">link3</a></li>
+		</ul>
+	</article>
+{/block}
+
+{block name="asidesearch"}{__block__}{/block}
+
+{block name="aside"}{__block__}{/block}
+
+{block name="asiderelative"}{/block}
+
+{block name="js"}
+
+{/block}

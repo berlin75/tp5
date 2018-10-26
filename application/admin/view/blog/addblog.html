@@ -1,0 +1,79 @@
+{extend name="public/base" /}
+
+{block name="title"}添加博文模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{__block__}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('blog/bloglist')}">博文管理</a> > 新增博文</p>
+	<div class="container-fluid">
+		<form action="" enctype="multipart/form-data" method="post" class="form-horizontal">
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label"><font color="red">* </font>标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="title" id="title">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="stitle" class="col-sm-2 control-label"><font color="red">* </font>短标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="stitle" id="title" placeholder="短标题最大长度为10个字符">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="cateid" class="col-sm-2 control-label"><font color="red">* </font>所属栏目</label>
+				<div class="col-sm-10">									
+					<select name="cateid" id="cateid" class="form-control">
+						<option>请选择栏目</option>
+						{volist name="cate" id="vo" empty="暂时没有栏目，请先创建！"}
+							<option value="{$vo.cid}">{$vo.catename}</option>
+						{/volist}
+					</select>
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="blogkeywords" class="col-sm-2 control-label">关键词</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="blogkeywords" id="blogkeywords">
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="blogdesc" class="col-sm-2 control-label">描述</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="blogdesc" name="blogdesc" style="width: 100%;height: 48px;"></textarea>
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="click" class="col-sm-2 control-label">点击数</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" value="0" name="click" id="click" >
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="pic" class="col-sm-2 control-label">缩略图</label>
+				<div class="col-sm-10">
+					<input type="file"  name="pic" id="pic"><font color="red">* </font>200K
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="picdesc" class="col-sm-2 control-label">缩略图描述</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="picdesc" id="picdesc">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="content" class="col-sm-2 control-label"><font color="red">* </font>内容</label>
+				<div class="col-sm-10">
+					<textarea name="content" id="content" style="width: 100%;height: 300px;"></textarea>
+				</div>
+			</div>
+			<div class="form-group text-center">
+		      	<input type="submit" class="addbtn btn btn-primary" value="确认添加">
+				<input type="button" class="addbtn btn btn-default" value=" 返回 " onclick="history.go(-1)">
+			</div>
+
+		</form>
+	</div>
+{/block}

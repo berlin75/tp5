@@ -1,0 +1,341 @@
+{extend name="public/base" /}
+
+{block name="title"}{$blog.title}-{__block__}{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/index/css/base.css" /}
+	<link href="__PUBLIC__/static/common/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="__PUBLIC__/static/common/starrr/dist/starrr.css" rel="stylesheet">
+	<script>
+		window.UEDITOR_HOME_URL='__PUBLIC__/static/ueditor/';
+		$(document).ready(function(){
+			UE.getEditor('artcommentbody',{
+				toolbars: [[
+		           'undo', 'redo', '|', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', '|', 'indent', 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+		            'emotion','searchreplace', 'drafts'
+		        ]]
+		        ,elementPathEnabled : false
+		        ,maximumWords:500       //允许的最大字符数
+			});
+		});
+	</script>
+	<script src="__PUBLIC__/static/ueditor/ueditor.config.js"></script>
+	<script src="__PUBLIC__/static/ueditor/ueditor.all.min.js"></script>
+	<script src="__PUBLIC__/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+{/block}
+
+{block name="section"}
+	<ol class="breadcrumb">
+	  <li><a href="{:url('index/index')}"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+	  <li><a href="{:url('articlelist/index',['cid'=>$blog.cateid])}">{$catename}</a></li>
+	  <li class="active">{$blog.title}</li>
+	</ol>
+
+	<div class="arttop">
+		<h2 class="arth2">{$blog.title}</h2>
+		<p>时间:<font color="red">{$blog.time|date='Y-m-d H:i:s',###}</font> | 栏目:<font color="red">{$catename}</font> | 作者:<font color="red">admin</font> | 评论:<font color="red">23</font> | 浏览:<font color="red">{$blog.click}</font>次</p>
+	</div>
+	<div class="text-right" style="padding: 1rem 3rem;">
+		<span class="glyphicon glyphicon-tags" style="color: red;"> Tags:</span>
+		{volist name="blogkeywords" id="vo"}
+			<a href="{:url('tags/index',['tag'=>$vo])}">{$vo}</a>
+		{/volist}
+	</div>
+	<div class="artcontent">{$blog.content}</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="storeart col-md-4" style="margin: 20px 0;">
+				<span class="h4">
+					<i class="glyphicon glyphicon-star-empty"></i>
+				</span>
+				<span style="position: relative;top: -5px;">收藏</span>
+			</div>
+			<div class="row updown col-md-4"> <!-- 点赞功能,1点赞，0吐槽，-1无 -->
+				<div id="up" class="col-md-4 col-xs-4 h4">
+					<label>
+						<input type="radio" name="updown" value="1" class="hide" >
+						<span class="glyphicon glyphicon-thumbs-up"></span>
+					</label>
+				</div>
+				<div id="down" class="col-md-4 col-xs-4 h4">
+					<label>
+						<input type="radio" name="updown" value="0" class="hide" >
+						<span class="glyphicon glyphicon-thumbs-down"></span>
+					</label>
+				</div>
+				<div id="def" class="col-md-4 col-xs-4 h3 hide">
+					<label><input type="radio" name="updown" value="-1" >-1</label>
+				</div>
+			</div>
+			
+			<div class="col-md-4" style="color: rgba(125,125,125,1);">
+				<div class='starrr'></div>
+			</div>
+			<!-- <div class="h3 star row col-md-4" style="color: rgba(125,125,125,1);">
+				{eq name="$star" value="99"}
+					{for start="0" end="5"}
+						<span onclick="star(this)"><i class="glyphicon glyphicon-star"></i></span>
+					{/for}
+				{else}
+					{for start="0" end="$star"}
+						<span onclick="star(this)" class="active"><i class="glyphicon glyphicon-star"></i></span>
+					{/for}
+					{for start="0" end="5-$star"}
+						<span onclick="star(this)"><i class="glyphicon glyphicon-star"></i></span>
+					{/for}
+				{/eq}
+			</div> -->
+		</div>
+	</div>
+
+	<div class="prenext">
+		<p>上一篇:
+			{if condition="$pre.title neq ''"}
+			<a href="{:url('article/index',['bid'=>$pre.bid])}" title="{$pre.title}">{$pre.title}</a>
+			{else/}
+			已经是第一篇文章
+			{/if}
+		</p>
+		<p>下一篇:
+			{if condition="$next.title neq ''"}
+			<a href="{:url('article/index',['bid'=>$next.bid])}" title="{$next.title}">{$next.title}</a>
+			{else/}
+			已经是最后一篇文章
+			{/if}
+		</p>
+	</div>
+
+	<form id="artcommentform">
+		<div class="form-group">
+			<div>
+				<textarea name="content" id="artcommentbody" style="width: 100%;height: 6rem;" placeholder="写评论……"></textarea>
+			</div>
+		</div>
+		<div class="form-group text-right">
+	      	<input type="button" class="btn btn-success" id="artcommentbtn" value="发布评论">
+		</div>		
+	</form>
+
+	<div class="artcomment">
+		<ul class="list-group">
+			<li class="list-group-item active" id="artcomment_list_title">
+		    	<h4 style="display: inline-block;" class="list-group-item-heading">留言列表:</h4>
+		    	<span class="badge"><a href=""> more >></a></span>
+		  	</li>
+		  	{volist name="artcomment" id="vo"}
+				<li class="list-group-item artcomment-li row">
+					<div class="artcomment-li-left">
+						<img src="__PUBLIC__/static/index/image/user.png" style="width:2rem;height:2rem;"">
+					</div>
+					<div class="artcomment-li-right">
+						<div class="list-style col-md-6 col-xs-6">{$vo.username}</div>
+						<div class="text-right col-md-6 col-xs-6">{$vo.commenttime|date="Y-m-d H:i",###}</div>
+				   		<div class="col-md-12">{$vo.comment}</div>	
+				   	</div>		   		
+			  	</li>
+		  	{/volist}
+		</dl>
+	</div>
+{/block}
+
+{block name="asidesearch"}{__block__}{/block}
+
+{block name="aside"}{__block__}{/block}
+
+{block name="asiderelative"}
+	<div class="about">
+		<ul class="list-group">
+			<li class="list-group-item active">
+		    	<h5 style="display: inline-block;" class="list-group-item-heading">您可能也喜欢:包含关键词</h5>
+		    	<span class="badge"><a href="{:url('articlelist/index',['cid'=>$blog.cateid])}"> more >></a></span>
+		  	</li>
+			{volist name="relative" id="vo" empty="暂时没有数据！"}
+				<li class="list-group-item">
+					<span class="list-style">{$i}.</span>
+			   		<a href="{:url('article/index',['bid'=>$vo.0])}" title="{$vo.1}">{$vo.1}</a>
+			   		<span class="badge" style="background: #fff;color: #000;">{$vo.2|date="Y-m-d",###}</span>
+			  	</li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="about">
+		<ul class="list-group">
+			<li class="list-group-item active">
+		    	<h5 style="display: inline-block;" class="list-group-item-heading">相关文章:同栏目文章</h5>
+		    	<span class="badge"><a href="{:url('articlelist/index',['cid'=>$blog.cateid])}"> more >></a></span>
+		  	</li>
+			{volist name="about" id="vo" empty="暂时没有数据！"}
+				<li class="list-group-item">
+					<span class="list-style">{$i}.</span>
+			   		<a href="{:url('article/index',['bid'=>$vo.bid])}" title="{$vo.title}">{$vo.title}</a>
+			   		<span class="badge" style="background: #fff;color: #000;">{$vo.time|date="Y-m-d",###}</span>
+			  	</li>
+			{/volist}
+		</ul>
+	</div>
+{/block}
+
+{block name="js"}
+	<script src="__PUBLIC__/static/common/starrr/dist/starrr.js"></script>
+	<!-- 收藏ajaxmembers -->
+	<script>
+// typeofdo=0取消收藏，typeofdo=1收藏
+		if({$storearted} == 1){ 
+			$('.storeart .h4').css('color', '#ff5300'); 
+		}
+		$('.storeart span').click(function(){  //点击收藏，先判断是否登录，如果登录判断是否已收藏，已收藏则取消，否则收藏
+			if({$storearted} === 99 ){
+				if(confirm("登录之后才可以收藏哦\n\n现在登录吗？")){
+					location.href = "{:url('login/index')}";
+				}
+			}else{
+				var senddata={bid:'{$blog.bid}'};
+				$.post("{:url('article/storeart')}",senddata,function(responsedata){
+					if(responsedata.code==1){					
+						if(responsedata.data.typeofdo === 1){
+							$('.storeart .h4').css('color', '#ff5300');
+						}else{
+							$('.storeart .h4').css('color', '#000');
+						}
+						alert(responsedata.msg);
+					}
+				});
+			}
+		});
+
+
+//点赞功能,typeofdo=0取消点赞，typeofdo=1点赞 ;点赞功能,1点赞，0吐槽，-1无
+		if({$updown} == 1){ 
+			$('#up').css('color', '#ff5300'); 
+			$('#up input').attr("checked","checked");
+		}else if({$updown} == 0){
+			$('#down').css('color', '#ff5300');
+			$('#down input').attr("checked","checked");
+		}else if({$updown} == -1){			
+			$('#def').css('color', '#ff5300');
+			$('#def input').attr("checked","checked");
+		}
+
+		$('.updown>div>label>span').click(function(){  //事件冒泡会多次触发click事件，采用span点击来触发			
+			if({$updown} === 99 ){
+				if(confirm("登录之后才可以点赞和吐槽哦\n\n现在登录吗？")){
+					location.href = "{:url('login/index')}";
+				}
+			}else{
+				var senddata=$(this).parent().find('input').val()==1?{bid:'{$blog.bid}',updown:'1'}:{bid:'{$blog.bid}',updown:'0'};
+				$.post("{:url('article/updown','','')}",senddata,function(responsedata){
+					if(responsedata.code==1){ 
+						if(responsedata.data.updown){
+							$('#up span').css('color','#ff5300');
+							$('#down span').css('color','#000');
+						}else{
+							$('#down span').css('color','#ff5300');
+							$('#up span').css('color','#000');
+						}
+						alert(responsedata.msg);					
+					}else{
+						alert(responsedata.msg);
+					}
+				},'json');	
+			}
+		});
+
+		//Starrr
+      	$('.starrr').starrr({
+      		rating: {$star} ==99 ? 0 : {$star},
+	  		change: function(e, value){
+	    		// alert('new rating is ' + value);
+	    		if({$star} === 99 ){
+	    			rating: 0;
+					if(confirm("登录之后才可以收藏哦\n\n现在登录吗？")){
+						location.href = "{:url('login/index')}";
+					}
+				}else{
+					var senddata = {bid:'{$blog.bid}',star:value}; 
+		    		$.post("{:url('article/star')}",senddata,function(responsedata){
+						if(responsedata.code==1){
+							rating: value;
+							// $(obj).prevAll().andSelf().css('color','#ff5300');
+							// $(obj).nextAll().css('color','rgb(125,125,125)');
+							// $(obj).unbind('mouseenter').unbind('mouseleave');
+							alert(responsedata.msg);			
+						}   
+					},'json');
+				}
+	    		
+	  		}
+		});
+	    // Starrr 
+
+		//五星打分，默认为0 
+		// $('.star span').each(function(i){
+		// 	$(this).bind({
+		// 		mouseenter: function(e){
+		// 			$('.star span').eq(i).css('color','#ff5300');
+		// 			$('.star span').eq(i).prevAll().css('color','#ff5300');
+		// 		},
+		// 		mouseleave: function(e){
+		// 			if(i > {$star}-1){
+		// 				$('.star span').eq(i).css('color','rgb(125,125,125)');
+		// 				$('.star span').eq(i).prevAll().css('color','rgb(125,125,125)');
+		// 			}
+		// 		}
+		// 	});
+		// });
+		
+		// function star(obj){ 
+		// 	if({$star} === 99 ){
+		// 		if(confirm("登录之后才可以收藏哦\n\n现在登录吗？")){
+		// 			location.href = "{:url('login/index')}";
+		// 		}
+		// 	}else{
+		// 		if($(obj).index()+1==1){ senddata = {bid:'{$blog.bid}',star:'1'}; }
+		// 		else if($(obj).index()+1==2){ senddata = {bid:'{$blog.bid}',star:'2'}; }
+		// 		else if($(obj).index()+1==3){ senddata = {bid:'{$blog.bid}',star:'3'}; }
+		// 		else if($(obj).index()+1==4){ senddata = {bid:'{$blog.bid}',star:'4'}; }
+		// 		else if($(obj).index()+1==5){ senddata = {bid:'{$blog.bid}',star:'5'}; }
+
+		// 		$.post("{:url('article/star')}",senddata,function(responsedata){
+		// 			if(responsedata.code==1){
+		// 				$(obj).prevAll().addBack().css('color','#ff5300');
+		// 				$(obj).nextAll().css('color','rgb(125,125,125)');
+		// 				$(obj).unbind('mouseenter').unbind('mouseleave');											
+		// 				alert(responsedata.msg);			
+		// 			}   
+		// 		},'json');
+		// 	}				
+		// }
+
+		$('#artcommentbtn').click(function(){
+			if(!{$islogined}){
+				alert('登录之后才可以评论哦！');
+				return false;
+			}
+			var artcomment = UE.getEditor('artcommentbody').getContent();
+			if(artcomment == ""){
+				alert('评论不能为空！');
+			}else{
+				var senddata = {bid:'{$blog.bid}',artcomment:artcomment};
+			    //console.log(typeof senddata);console.log(senddata);
+				$.post("{:url('article/artcomment')}",senddata,function(responsedata){
+					if(responsedata.code==1){																	
+						alert('发表评论成功！');
+						$('#artcommentform').hide();
+
+					 	var myDate=Date();
+						var artcomment_list_li = '<li class="list-group-item artcomment-li row"><div class="list-style col-md-6 col-xs-6">';
+						artcomment_list_li += '{$Think.session.username}';
+						artcomment_list_li += '</div><div class="text-right col-md-6 col-xs-6">';
+						artcomment_list_li += responsedata.msg;
+						artcomment_list_li += '</div><div>';
+						artcomment_list_li += artcomment;
+						artcomment_list_li += '</div></li>'; 
+						console.log(artcomment_list_li);
+						$(".artcomment ul").append(artcomment_list_li);
+					}
+				});
+			}
+		});
+	</script>
+{/block}

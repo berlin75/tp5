@@ -1,0 +1,109 @@
+{extend name="public/base" /}
+
+{block name="title"}管理列表模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"> <span class="glyphicon glyphicon-home"></span>首页</a> > <a href="{:url('members/memberslist')}">用户管理</a> > 用户列表</p>
+	<div class="wrap table-responsive">
+		<ul class="list-inline">
+			<li><li><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">新增用户</button></li></li>
+			<li><a class="btn btn-success" href="#">批量删除</a></li>
+			<li><a class="btn btn-success" href="#">更新排序</a></li>
+			<li><font color="red">有且仅有一个超级管理uid=1,admin;删除用户还必须同时删除其留言，评论；只能修改管理员，超管不能锁定和删除</font></li>
+		</ul>	
+		<table class="listtab table table-striped table-bordered table-hover table-condensed">
+			<tr>
+				<th><input type="checkbox" ></th>
+				<th>sort</th>
+				<th >ID</th>
+				<th>user</th>
+				<th title="所属用户组">group</th>
+				<th>tel</th>
+				<th>email</th>
+				<th>gender</th>
+				<th>birth</th>
+				<th title="登录时间">logintime</th>
+				<th title="登录ip">loginip</th>
+				<th title="登录次数">count</th>
+				<th title="会员积分">score</th>
+				<th title="锁定状态">locked</th>
+				<th>操作</th>
+			</tr>
+			{volist name="data" id="vo" empty="暂时没有数据"}
+				<tr>
+					<td><input type="checkbox" ></td>
+					<td><input type="text" name="sort" value="0" size="2" class="text-center"></td>
+					<td>{$vo.uid}</td>
+					<td>{$vo.username}</td>
+					<td>{$vo.group_title}</td>
+					<td>{$vo.tel}</td>
+					<td>{$vo.email}</td>
+					<td>{$vo.gender}</td>
+					<td>{$vo.birthday}</td>
+					<td>{$vo.logintime|date="Y.m.d",###}</td>
+					<td>{$vo.loginip}</td>
+					<td>{$vo.logincount}</td>
+					<td>{$vo.score}</td>
+					<td>{$vo.locked}</td>
+					<td>					
+						<a class="btn btn-info" href="{:url('editormembers',['uid'=>$vo.uid])}" {eq name="$vo.typeof" value="0"} disabled="disabled" onclick="return false;" {/eq}>修改</a>  
+
+						{eq name="$vo.locked" value="0"}
+							<a class="btn btn-warning" href="{:url('lockmembers',['uid'=>$vo.uid])}" {eq name="$vo.uid" value="1"} disabled="disabled" onclick="return false;" {/eq} onclick="return confirm('确定要锁定该用户吗？')">锁定</a>
+						{else/}
+							<a class="btn btn-success" href="{:url('unlockmembers',['uid'=>$vo.uid])}" {eq name="$vo.uid" value="1"} disabled="disabled" onclick="return false;" {/eq} onclick="return confirm('确定要解锁该用户吗？')">解锁</a>
+						{/eq}
+						<a class="btn btn-danger" href="{:url('deletemembers',['uid'=>$vo.uid])}" {eq name="$vo.uid" value="1"} disabled="disabled" onclick="return false;" {/eq} onclick="return confirm('确定要删除该用户吗？')">删除</a>	
+					</td>
+				</tr>
+			{/volist}
+		</table>
+	</div>
+<!-- bootstrap模态框新增用户 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	    		<form action="{:url('members/addmembers')}" method="post" class="form-horizontal">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title" id="myModalLabel">新增用户<small>---bootstrap模态框</small></h4>
+		      		</div>
+		      		<div class="modal-body">
+			      		<div class="form-group">
+							<label for="username" class="col-md-3 col-xs-3 control-label"><font color="red">* </font>用户名</label>
+							<div class="col-md-9 col-xs-9">
+								<input type="text" name="username" id="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="authgroup" class="col-md-3 col-xs-3 control-label"><font color="red">* </font>用户组</label>
+							<div class="col-md-9 col-xs-9">
+								{volist name="authgroup" id="vo"}
+									{if condition="!strchr($vo.title,'会员')"}
+										<input type="radio" name="authgroup" id="authgroup{$vo.id}" value="{$vo.id}">
+										<label for="authgroup{$vo.id}">{$vo.title}</label>
+									{/if}
+								{/volist}
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-md-3 col-xs-3 control-label"><font color="red">* </font>密 码</label>
+							<div class="col-md-9 col-xs-9">
+								<input type="text" name="password" id="password">
+							</div>
+						</div>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button type="submit" class="btn btn-primary" >确认新增</button>
+		        		<button type="button" class="btn btn-default" data-dismiss="modal">取消新增</button>
+		      		</div>
+	      		</form>
+	    	</div>
+	  	</div>
+	</div>
+{/block}

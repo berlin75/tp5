@@ -1,0 +1,87 @@
+{extend name="public/base" /}
+
+{block name="title"}修改博文模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{__block__}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('blog/bloglist')}">博文管理</a> > 博文修改</p>
+	<div class="container-fluid">
+		<form action="" enctype="multipart/form-data" method="post" class="form-horizontal">			
+			<div class="form-group ">
+				<label class="col-sm-2 control-label" for="title"><font color="red">* </font>标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="title" id="title" value="{$blog.title}">
+				</div>
+			</div>
+			<div class="form-group ">
+				<label class="col-sm-2 control-label" for="stitle"><font color="red">* </font>短标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="stitle" id="title" value="{$blog.stitle}">
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label" for="cateid"><font color="red">* </font>所属栏目</label>
+				<div class="col-sm-10">					
+					<select name="cateid" id="cateid" class="form-control">
+						<option>请选择栏目</option>
+						{volist name="cate" id="vo" empty="暂时没有栏目，请先创建！"}
+							<option value="{$vo.cid}" {if condition="$vo.cid eq $blog.cateid"} selected="selected"{/if}>{$vo.catename}</option>
+						{/volist}
+					</select>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label" for="blogkeywords">关键词</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="blogkeywords" id="blogkeywords" value="{$blog.blogkeywords}">
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label" for="blogdesc">描述</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="blogdesc" name="blogdesc" style="width: 100%;height: 48px;" >{$blog.blogdesc}</textarea>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label" for="click">点击数</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" name="click" id="click" value="{$blog.click}">
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label" for="pic">缩略图</label>
+				<div class="col-sm-10 row">
+				{if condition="$blog.pic eq ''"}暂无缩略图
+				{else/}<div class=""><img class="col-sm-1" src="__PUBLIC__/static/uploads/{$blog.pic|strstr=' '|trim}" title="缩略图" height="50" /></div>
+				{/if}
+				<div class="col-sm-8">
+					<input type="file" name="pic" id="pic" >
+					<font color="red">* </font>200K
+				</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="picdesc" class="col-sm-2 control-label">缩略图描述</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="picdesc" id="picdesc" value="{$blog.picdesc}">
+				</div>
+			</div>
+			<div class="form-group" >
+				<label for="content" class="col-sm-2 control-label"><font color="red">* </font>内容</label>
+				<div class="col-sm-10">
+					<textarea name="content" id="content" style="width: 100%;">{$blog.content}</textarea>
+				</div>
+			</div>
+			<div class="form-group text-center" >
+					<input type="hidden" name="bid" value="{$blog.bid}" >
+					<input type="hidden" name="preurl" value="{$_SERVER['HTTP_REFERER']}" >
+					<input class="btn btn-primary" type="submit" value="确认修改">
+					<input class="btn btn-default" type="button" value="返回" onclick="history.go(-1)">
+			</div>
+		</table>
+		</form>
+	</div>
+{/block}

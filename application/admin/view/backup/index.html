@@ -1,0 +1,153 @@
+{extend name="public/base" /}
+
+{block name="title"}数据库备份模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome">
+		<a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > 
+		<a href="{:url('backup/index')}">数据库<span style="font-weight: bold;color: red;">{$Think.config.database.database}</span>备份还原</a> > 数据表列表</p>
+	<p>
+		<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalsql">执行SQL命令语句</button>
+		<span style="color: red">数据库以sql文件形式备份到/backup/ </span>
+	</p>
+<div class="table-responsive">
+	<table class="listtab table table-striped table-bordered table-hover table-condensed">
+		<tr>
+			<th>序号</th>
+			<th>数据表</th>
+			<th>字段</th>
+			<th>操作</th>
+		</tr>
+		{volist name="tabres" id="vo"}
+			<tr>
+				<td>{$key+1}</td>
+				<td>{$vo.tbname}</td>
+				<td>
+					{volist name="$vo.fields" id="v"}
+						<span>{$v}</span>
+					{/volist}
+				</td>
+				<td>
+					<button class="btn btn-primary export" data-tbname="{$vo.tbname}">备份</button>
+					<button class="btn btn-danger import" data-tbname="{$vo.tbname}">还原</button>
+				</td>
+			</tr>
+		{/volist}
+	</table>
+<!-- bootstrap模态框选择备份文件 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	    		<form name="importform" id="importform" class="form-horizontal">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title" id="myModalLabel">选择备份文件<small>---bootstrap模态框</small></h4>
+		      		</div>
+		      		<div class="modal-body" id="select-import">
+				      	<div class="checkbox container">
+				        	<label>
+				          		<input type="radio"> Remember me
+				        	</label>
+				      	</div>
+		      		</div>
+
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-primary" id="comfirm-import">确认还原</button>
+		        		<button type="button" class="btn btn-default" data-dismiss="modal">取消还原</button>
+		      		</div>
+	      		</form>
+	    	</div>
+	  	</div>
+	</div>
+</div>
+<!-- bootstrap模态框选择备份文件 -->
+	<div class="modal fade" id="myModalsql" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog modal-lg" role="document">
+	    	<div class="modal-content">
+	    		<form action="{:url('backup/sql')}" method="post" name="importform" id="sqlform" class="form-horizontal">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title" id="myModalLabel">执行SQL语句<small>---bootstrap模态框</small></h4>
+		      		</div>
+		      		<div class="modal-body" id="select-import">
+				      	<textarea placeholder="每条SQL语句以;;结尾" name="sql" class="form-control" rows="8"></textarea>
+		      		</div>
+
+		      		<div class="modal-footer">
+		        		<button type="submit" class="btn btn-primary">执行SQL</button>
+		        		<button type="button" class="btn btn-default" data-dismiss="modal">取消执行</button>
+		      		</div>
+	      		</form>
+	    	</div>
+	  	</div>
+	</div>
+</div>
+<script>
+	function downloadexcel(){  
+		$.post("{:url('blog/blogphpexcel','','')}",function(data){
+			if(data.status==1){
+				window.location.href='__PUBLIC__/static/excel/'+data.downpath;
+			}
+		},'json');		
+	};
+
+	$('.export').click(function(){
+		var tbname=$(this).attr('data-tbname');
+		if(confirm('确定要备份数据表 ' + tbname + ' 吗？')){
+			$.post("{:url('backup/export','','')}",{'tbname' : tbname},function(data){
+				if(data.status==1){
+					var alertstr='数据表' + tbname + '备份成功\n备份文件路径:\n' + data.exportpath;
+					alert(alertstr);
+				}
+			},'json');	
+		}
+	});
+
+	$('.import').click(function(){
+		var tbname=$(this).attr('data-tbname');
+		if(confirm('确定要还原数据表 ' + tbname + ' 吗？')){ 			
+			$.post("{:url('backup/import','','')}",{'tbname' : tbname},function(data){
+				if(data.status==0){
+					alert('没有检索到数据表'+tbname+'的备份文件！');
+				}else{
+					var selectstr = ''; 
+					$.each(data.filelist,function(i){
+						selectstr += '<div class="radio container"><label><input type="radio" name="file" value="' + data.filelist[i] + '">' 
+						selectstr += data.filelist[i];
+						selectstr += '</label> </div>';
+					});
+					
+					$('#select-import').html(selectstr);
+					$('#select-import > div').first().find('input').attr("checked","checked");
+					$('#myModal').modal('toggle');
+				}
+			},'json');	
+		}
+	});
+
+	$('#comfirm-import').click(function(){
+		var formData = new FormData($("#importform")[0]); 
+		$.ajax({  
+	      url: "{:url('backup/confirmimport','','')}",  
+	      type: "POST",  
+	      data: formData, 
+	      dataType:"json",  
+	      contentType: false,  
+	      processData: false,  
+	      success:function(data){ console.log(data);
+	      	$('#myModal').modal('toggle');
+	        if (data.status == 1) { 
+	        	$.each(data.result,function(i){
+			        console.log((data.result[i]));
+     			});
+	           alert('还原成功！');
+	        }
+	      } 
+	    });  
+	});
+</script>
+{/block}

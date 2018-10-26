@@ -1,0 +1,28 @@
+{extend name="public/base" /}
+
+{block name="title"}后台首页模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+<p class="text-center">
+	<a class="btn btn-danger btn-lg" href="#" id="del">一键删除runtime文件夹</a>
+</p>
+    <script>
+        $("#del").click(function(){
+            $.ajax({
+                url:"{:url('delruntime/delRun')}",
+                type:"get",
+                //data:{'admin_id':gid},
+                //dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    alert(data.msg);
+                },
+            });
+        })
+    </script>
+
+{/block}

@@ -1,0 +1,102 @@
+{extend name="public/base" /}
+
+{block name="title"}数据库备份模板文件源码{/block}
+{block name="cssjs"}
+  {css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+<p class="welcome">
+  <a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > 
+  数据库<span style="font-weight: bold;color: red;">{$Think.config.database.database}</span> sql命令</p>
+<p>
+
+<div id="page-content" style="min-height: 395px;">
+  <div class="container-fluid">
+    <div  style="border-bottom: 1px solid #ccc;">
+      <div class="block full">
+        <div class="block-title"><h4>数据库命令:</h4></div>
+          <form id="form-sql" onsubmit="return!1" class="form-horizontal form-bordered" method="post" action="{:url('backup/sqlcode')}">
+            <div class="form-group">
+              <div class="col-md-10 col-md-offset-2">                                
+                <div class="col-xs-6">
+                    <select size="1" class="form-control" id="tables">
+                        {volist name="tables" id="vo"}
+                            <option value="{$vo[$tkey]}">{$vo[$tkey]}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="btn-group">                                     
+                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">快捷SQL语句<span class="caret"></span></a>
+                  <ul class="dropdown-menu text-left">
+                      <li class="dropdown-header"><i class="fa fa-user pull-right"></i><strong>select语句</strong></li>
+                      <li><a href="javascript:insert('SELECT * FROM `[table]` WHERE 1')">select</a></li>
+                      <li><a href="javascript:insert('INSERT INTO `[table]` VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])')">insert</a></li>
+                      <li><a href="javascript:insert('UPDATE `[table]` SET `[]`=[value-2] WHERE 1')">update</a></li>
+                      <li><a href="javascript:insert('DELETE FROM `[table]` WHERE 1')">delete</a></li>                                        
+                      <li class="divider"></li>                                        
+                  </ul>
+                </div>                               
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="example-textarea-input" class="col-md-2 control-label">SQL命令语句</label>
+                <div class="col-md-10">
+                    <textarea placeholder="每条SQL语句以;;结尾" class="form-control" rows="7" name="sql" id="sql"></textarea>
+                </div>
+            </div>
+            <div class="form-group form-actions">
+                <div class="col-md-10 col-md-offset-2">
+                    <button class="btn btn-effect-ripple btn-primary" id="form" type="button" style="overflow:hidden;position:relative">执行</button>
+                    <button class="btn btn-effect-ripple btn-danger" type="reset" style="overflow:hidden;position:relative">重置</button>
+                </div>
+            </div>
+          </form>
+        </div> 
+      </div>
+      <div>
+          <div class="block full">
+              <div class="block-title"><h4>输出结果:</h4></div>
+              <p id="result" style="background-color: #cccccc;"></p>
+         </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
+<script src="__PUBLIC__/static/admin/js/base64.js"></script>
+<script>
+function insert($sql){
+    if ($sql){
+        var table=$("#tables").val();
+        $("#sql").text($sql.replace("[table]", table));
+    }
+}
+
+$("#form").click(function(){
+    var sql=$("#sql").val();
+    var url =$("#form-sql").attr("action");
+    if (!sql){
+      alert("SQL不能为空!!");
+      return;
+    }
+    //sql=base64_encode(sql);
+    $.ajax({  
+         url:url,
+         data:{sql:sql},  
+         type:'post',  
+         cache:true,  
+         dataType:'html',  
+         success:function(data) {  
+            $("#result").html(data); 
+          },  
+          error : function() {  
+              $("#result").html('错误的SQL语句！<br/>'+$("#sql").val());
+          }  
+     }); 
+      
+    
+})
+</script>
+{/block}

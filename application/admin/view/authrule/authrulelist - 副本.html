@@ -1,0 +1,56 @@
+{extend name="public/base" /}
+
+{block name="title"}用户组列表模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('authrule/authrulelist')}">规则管理</a> > 规则列表</p>
+	<div>
+		<ul class="list-inline">
+			<li><a class="btn btn-success" href="{:url('addauthrule')}">新增规则</a></li>
+			<li><a class="btn btn-success" href="#">批量删除</a></li>
+			<li><input class="btn btn-success" type="submit" value="更新排序" form="authrulelistform" style="cursor: pointer;"></li>
+		</ul>
+		<form action="" method="post" name="authrulelistform" id="authrulelistform" class="table-responsive">	
+			<table class="listtab table table-striped table-bordered table-hover table-condensed">
+				<tr>
+					<th><input type="checkbox" ></th>
+					<th>排序</th>
+					<th>ID</th>
+					<th>规则标识</th>
+					<th>规则名称</th>
+					<th>级别pid</th>
+					<th>规则表达式</th>
+					<th>类型</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+				{volist name="authrule" id="vo" empty="暂时没有数据！"}
+					<tr>
+						<td><input type="checkbox" ></td>
+						<td>
+							<input type="text" name="sort[]" value="{$vo.sort}" size="2" class="text-center">
+							<input type="hidden" name="id[]" value="{$vo.id}" >
+						</td>
+						<td>{$vo.id}</td>
+						<td>{$vo.name}</td> <!--可能调用无限极分类-->
+						<td>{$vo.html?$vo.html:' '}{$vo.title}</td>
+						<td>{$vo.pid}</td>
+						<td>{$vo.condition}</td>
+						<td>{$vo.type}</td>
+						<td>{eq name="$vo.status" value="1" }正常{else/}禁用{/eq}</td>
+						<td>
+							<a class="btn btn-primary" href="{:url('addauthrule',['pid'=>$vo.id])}">添加</a>
+							<a class="btn btn-info" href="{:url('editorauthrule',['id'=>$vo.id])}">修改</a>
+							<a class="btn btn-warning" href="{:url('deleteauthrule',['id'=>$vo.id])}" onclick="return confirm('确定要删除该栏目吗？')">删除</a>						
+						</td>
+					</tr>
+				{/volist}
+			</table>
+	    </form>
+	</div>
+{/block}

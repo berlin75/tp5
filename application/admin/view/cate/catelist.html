@@ -1,0 +1,52 @@
+{extend name="public/base" /}
+
+{block name="title"}栏目列表模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('cate/catelist')}">栏目管理</a> > 栏目列表</p>
+	<div class="wrap">
+		<ul class="list-inline">
+			<li><a class="btn btn-success" href="{:url('cate/addcate')}">新增栏目</a></li>
+			<li><input type="submit" class="btn btn-success" id="upsortbt" form="catalistform" value="post更新排序" style="cursor: pointer;"/></li>
+		</ul>
+		<form action="{:url('cate/upsort')}" method="post" name="catalistform" id="catalistform" class="table-responsive">
+			<table class="listtab table table-striped table-bordered table-hover table-condensed">
+				<tr>
+					<th><input type="checkbox" ></th>
+					<th>排序</th>
+					<th>CID</th>
+					<th>栏目名称</th>
+					<th>栏目类型</th>
+					<th>关键词</th>
+					<th>栏目描述</th>
+					<th>操作</th>
+				</tr>
+				{volist name="data" id="vo" empty="暂时没有数据"}
+					<tr>
+						<td><input type="checkbox" ></td>
+						<td>
+							<input type="text" name="sort[]" value="{$vo.sort}" size="2" class="text-center">
+							<input type="hidden" name="cid[]" value="{$vo.cid}" >
+						</td>
+						<td>{$vo.cid}</td>
+						<td>{$vo.catename}</td>
+						<td>{if condition="$vo.catetype==0"}列表栏目{else /}留言板{/if}</td>
+						<td>{$vo.catekeywords}</td>
+						<td>{$vo.catedesc}</td>
+						<td>
+							<a class="btn btn-primary" href="#">添加子栏目</a>
+							<a class="btn btn-info" href="{:url('editorcate',['cid'=>$vo.cid])}">修改</a>
+							<a class="btn btn-warning" href="{:url('deletecate',['cid'=>$vo.cid])}" onclick="return confirm('确定要删除该栏目吗？')">删除</a>
+						</td>
+					</tr>
+				{/volist}
+			</table>
+		</form>
+	   {$data->render()}
+	</div>
+{/block}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="{$Think.config.webinfor.keyword}">
+<meta name="description" content="{$Think.config.webinfor.description}">
+<meta name="Author" content="{$Think.config.webinfor.webname}">
+<meta name="renderer" content="webkit">
+<meta name="baidu_union_verify" content="{$Think.config.webinfor.baiduu}">
+<meta name="google-site-verification" content="{$Think.config.webinfor.googlev}">
+<meta name="baidu-site-verification" content="{$Think.config.webinfor.baiduv}">
+<meta name="sogou_site_verification" content="{$Think.config.webinfor.sogouv}">
+<meta name="360-site-verification" content="{$Think.config.webinfor.360v}">
+<link rel="shortcut icon" href="__PUBLIC__/static/favicon.ico" />
+<link rel="bookmark" href="__PUBLIC__/static/favicon.ico" type="image/x-icon"/>
+<title>{block name="title"}{$Think.config.webinfor.webname}{/block}</title>
+{js file="__PUBLIC__/static/common/jquery-3.1.1.js" /}
+{css file="__PUBLIC__/static/common/bootstrap/css/bootstrap.min.css" /}
+
+{block name="cssjs"}{/block}
+<!--百度统计-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?71238d5d26321ca3a21a98fce0ad7ecd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+	<header id="top">
+		{include file="public/nav" /}
+	</header>
+	<main class="container">
+		<div class="row">
+			<section class="col-md-9">
+				{block name="section"}网站主体左侧{/block}
+			</section>
+			<aside class="col-md-3">
+				{block name="asidesearch"}{include file="public/searchform" /}{/block}
+				{block name="aside"}{include file="public/aside" /}{/block}
+				{block name="asiderelative"}内容页相关文章{/block}
+			</aside>
+		</div>
+	</main>
+	<footer id="bottom">
+		<div class="container">
+			{include file="public/footer" /}
+		</div>
+	</footer>
+
+	<!--侧边悬浮框-->
+	{include file="public/fixnav" /}
+
+	<!--侧边标签随机颜色-->
+	<script>
+		var arr=['label-default','label-primary','label-success','label-info','label-warning','label-danger'];
+		$('.tags-ul li').each(function(){
+			$(this).addClass(arr[Math.round(Math.random()*5)]);
+		});   
+	</script>
+
+	{js file="__PUBLIC__/static/common/bootstrap/js/bootstrap.min.js" /}
+	{block name="js"}{/block}
+	
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"快乐来自分享","bdMini":"2","bdMiniList":["mshare","qzone","tsina","sqq","bdysc","weixin","tqq","bdxc","tieba","douban","meilishuo","mogujie","huaban","youdao","qingbiji","mail","isohu","ty","fbook","twi","linkedin","evernotecn"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</body>
+</html>

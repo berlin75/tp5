@@ -1,0 +1,21 @@
+<form action="{:url('search/index')}" method="post" >
+	<div class="form-group">
+		<div class="input-group">
+			<input type="search" class="form-control" name="keyword" size="26" title="Enter keyword(s),then press enter" placeholder="关键词..."/>
+			<input type="hidden" name="preurl" value="">
+			<div class="input-group-btn">
+	        	<button type="submit" class="btn btn-primary" title="搜索">
+	        		<span class="glyphicon glyphicon-search"></span>
+	        	</button>
+      		</div>
+		</div>
+		<p>热搜关键词: 
+			{volist name="hotkeywords" id="vo" length="3"}
+				<font color="red"> {$vo.keyword|substr=###,0,12}</font> 
+			{/volist}
+		</p>
+	</div>
+</form>
+<script>
+	$('input[type=hidden').val(location.href);
+</script>

@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /application/
+Disallow: /extend/
+Disallow: /runtime/
+Disallow: /tests/
+Disallow: /thinkphp/
+Disallow: /vendor/
+
+Sitemap: ./index.php/index/sitemap/sitemap.html

@@ -1,0 +1,85 @@
+{extend name="public/base" /}
+
+{block name="title"}后台webuploader官方demo模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+	{css href="__PUBLIC__/static/webuploader/demo.css" /}
+	{css href="__PUBLIC__/static/webuploader/webuploader.css" /}
+	<style type="text/css">
+		.file,label{ position: relative; display: inline-block; background: #D0EEFF; border: 1px solid #99D3F5;
+		    border-radius: 4px; padding: 4px 12px; overflow: hidden; color: #1E88C7; text-decoration: none;
+		    text-indent: 0; line-height: 20px;
+		}
+		.file input{ position: absolute; font-size: 100px; right: 0; top: 0; opacity: 0; }
+		.inputfile{opacity: 0;cursor: pointer;width: 10px;}
+		.file:hover{ background: #AADFFD;border-color: #78C3F3;color: #004974; text-decoration: none;}
+		label:hover{ background: #AADFFD;border-color: #78C3F3;color: #004974; text-decoration: none;}
+		.upbtn{ border-radius: 4px; padding: 4px 25px;line-height: 20px; }
+
+	</style>
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+<br>
+	<form action="{:url('webuploader/upload')}" method="post" enctype="multipart/form-data">
+		<p>
+			<a href="javascript:;" class="file">
+				<span class="glyphicon glyphicon-plus"></span>选择文件
+				<input type="file" name="file" >
+			</a>
+		</p>
+		<p class="fileerrorTip"></p><p class="showFileName"></p><br>
+		<p><input type="submit" class="upbtn" value="上传" ></p>
+	</form>
+<hr>
+	<form action="{:url('webuploader/upload')}" method="post" enctype="multipart/form-data" id="form2">
+		<p>
+			<input type="file" name="file" id="file" class="inputfile">
+			<label for="file"><span class="glyphicon glyphicon-plus">点击选择文件</label>
+		</p>
+		<p class="fileerrorTip"></p><p class="showFileName"></p><br>		
+		<p>
+			<input type="submit" class="upbtn" value="上传" >
+			<input type="button" value="清除" onclick="document.getElementById('file').reset()">
+		</p>
+	</form>
+<hr>
+
+
+	<script>
+		$(".file").on("change","input[type='file']",function(){
+		    var filePath=$(this).val(); 
+		    if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1){
+		        $(".fileerrorTip").html("").hide();
+		        var arr=filePath.split('\\');
+		        var fileName=arr[arr.length-1]; 
+		        $(".showFileName").html(fileName);
+		    }else{
+		        $(".showFileName").html("");
+		        $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
+		        return false 
+		    }
+		})
+
+		$(".inputfile").on("change",function(){
+		    var filePath=$(this).val();  alert(filePath);
+		    if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1){
+		        $(".fileerrorTip").html("").hide();
+		        var arr=filePath.split('\\');
+		        var fileName=arr[arr.length-1]; 
+		        $(".showFileName").html(fileName);
+		    }else{
+		        $(".showFileName").html("");
+		        $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
+		        return false 
+		    }
+		})
+
+	</script>
+
+<!-- 	<script type="text/javascript">BASE_URL='/webuploader';</script>
+	{js href="__PUBLIC__/static/webuploader/webuploader.js" /}
+	{js href="__PUBLIC__/static/webuploader/demo.js" /} -->
+{/block} 

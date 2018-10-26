@@ -1,0 +1,164 @@
+{extend name="public/base" /}
+
+{block name="title"}系统设置模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('setsys/index')}">系统设置</a> > 基本设置</p>
+	<div class="container-fluid">
+		<form action="" method="post" class="form-horizontal">
+			<fieldset>
+				<legend>网站信息</legend>
+				<div class="form-group">
+					<label for="webname" class="col-md-3 control-label"><font color="red">* </font>网站名称-webname</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="webname" id="webname" value="{$Think.config.webinfor.webname}">
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="keyword" class="col-md-3 control-label"><font color="red">* </font>网站关键字-keyword</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="keyword" id="keyword" value="{$Think.config.webinfor.keyword}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-md-3 control-label"><font color="red">* </font>网站关描述-description</label>
+					<div class="col-md-9">
+						<textarea class="form-control" id="description" name="description" style="width: 100%;height: 52px;">{$Think.config.webinfor.description}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="beian" class="col-md-3 control-label"><font color="red">* </font>备案号-beian</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="beian" id="beian" value="{$Think.config.webinfor.beian}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="baiduu" class="col-md-3 control-label">百度联盟-baiduu</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="baiduu" id="baiduu" value="{$Think.config.webinfor.baiduu}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="baiduv" class="col-md-3 control-label">百度认证-baiduv</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="baiduv" id="baiduv" value="{$Think.config.webinfor.baiduv}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="360v" class="col-md-3 control-label">360认证-360v</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="360v" id="360v" value="{$Think.config.webinfor.360v}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="googlev" class="col-md-3 control-label">google认证-googlev</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="googlev" id="googlev" value="{$Think.config.webinfor.googlev}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="sogouv" class="col-md-3 control-label">sogou认证-sogouv</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="sogouv" id="sogouv" value="{$Think.config.webinfor.sogouv}">
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>验证码设置</legend>
+				<div class="form-group">
+					<label for="codeSet" class="col-md-3 control-label">字符集-codeSet</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="codeSet" id="codeSet" value="{$Think.config.captcha.codeSet}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fontSize" class="col-md-3 control-label">字体大小-fontSize</label>
+					<div class="col-md-9">
+						<input type="number" class="form-control" name="fontSize" id="fontSize" value="{$Think.config.captcha.fontSize}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="useCurve" class="col-md-3 control-label">混淆曲线-useCurve</label>
+					<div class="col-md-9 radio">
+						<label><input type="radio" name="useCurve" value="1" {eq name="$Think.config.captcha.useCurve" value="1"} checked="checked" {/eq}>1</label>
+						<label><input type="radio" name="useCurve" value="0" {eq name="$Think.config.captcha.useCurve" value="0"} checked="checked" {/eq}>0</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="imageH" class="col-md-3 control-label">图片高度-imageH</label>
+					<div class="col-md-9">
+						<input type="number" class="form-control" name="imageH" id="imageH" value="{$Think.config.captcha.imageH}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="imageW" class="col-md-3 control-label">图片宽度-imageW</label>
+					<div class="col-md-9">
+						<input type="number" class="form-control" name="imageW" id="imageW" value="{$Think.config.captcha.imageW}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="length" class="col-md-3 control-label">验证码长度-length</label>
+					<div class="col-md-9">
+						<input type="number" class="form-control" name="length" id="length" value="{$Think.config.captcha.length}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="reset" class="col-md-3 control-label">验证成功后重置-reset</label>
+					<div class="col-md-9 radio">
+						<label><input type="radio" name="reset" value="true" {if condition="$Think.config.captcha.reset"} checked="checked" {/if}>true</label>
+						<label><input type="radio" name="reset" value="false" {if condition="!$Think.config.captcha.reset"} checked="checked" {/if}>false</label>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>目录设置</legend>
+				<div class="form-group">
+					<label for="exportdir" class="col-md-3 control-label">数据库备份-exportdir</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="exportdir" id="exportdir" value="{$Think.config.setdir.exportdir}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="uploaddir" class="col-md-3 control-label">上传目录-uploaddir</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="uploaddir" id="uploaddir" value="{$Think.config.setdir.uploaddir}">
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>登录、搜索锁定时间</legend>
+				<div class="form-group">
+					<label for="searchtime" class="col-md-3 control-label">搜索时间间隔-searchtime</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="searchtime" id="searchtime" value="{$Think.config.settime.searchtime}" title="单位为秒">
+					</div>
+					<p class="col-md-3">单位为s</p>
+				</div>
+				<div class="form-group">
+					<label for="logerrtimes" class="col-md-3 control-label">登录次数限制-logerrtimes</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="logerrtimes" id="logerrtimes" value="{$Think.config.settime.logerrtimes}" title="最多登录失败次数">
+					</div>
+					<p class="col-md-3">最多登录失败次数</p>
+				</div>
+				<div class="form-group">
+					<label for="logerruntil" class="col-md-3 control-label">登录限制间隔-logerruntil</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="logerruntil" id="logerruntil" value="{$Think.config.settime.logerruntil}" title="超过次数之后的间隔，单位小时">
+					</div>
+					<p class="col-md-3">超过次数之后的间隔，单位小时</p>
+				</div>
+			</fieldset>
+
+			<div class="form-group text-center" >
+				<input class="btn btn-primary" type="submit" value="保存设置">
+				<input class="btn btn-default" type="button" value="返回" onclick="history.go(-1)">
+			</div>
+		</form>
+	</div>
+	
+{/block}

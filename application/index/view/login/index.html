@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="{$Think.config.webinfor.keyword}">
+<meta name="description" content="{$Think.config.webinfor.description}">
+<meta name="Author" content="{$Think.config.webinfor.webname}">
+<meta name="renderer" content="webkit">
+<meta name="baidu_union_verify" content="{$Think.config.webinfor.baiduu}">
+<meta name="google-site-verification" content="{$Think.config.webinfor.googlev}">
+<meta name="baidu-site-verification" content="{$Think.config.webinfor.baiduv}">
+<meta name="sogou_site_verification" content="{$Think.config.webinfor.sogouv}">
+<meta name="360-site-verification" content="{$Think.config.webinfor.360v}">
+<link rel="shortcut icon" href="__PUBLIC__/static/favicon.ico" />
+<link rel="bookmark" href="__PUBLIC__/static/favicon.ico" type="image/x-icon"/>
+<title>登录-{$Think.config.webinfor.webname}</title>
+{js file="__PUBLIC__/static/common/jquery-3.1.1.js" /}
+{css file="__PUBLIC__/static/common/bootstrap/css/bootstrap.min.css" /}
+{css file="__PUBLIC__/static/common/nprogress/nprogress.css" /}
+{css href="__PUBLIC__/static/index/css/base.css" /}
+<style>
+	body{background: #f2f2f2;}
+	#logregbox{padding-top: 2rem;margin-bottom: 3rem;background: #fff;border-radius: 4px;box-shadow:3px 3px 15px #666;}
+</style>
+</head>
+<body>
+	<header id="top">
+		{include file="public/nav" /}
+	</header>
+	<main class="container-fluid">
+		<section class="row">
+	        <div id="logregbox" class="col-md-6 col-md-offset-3">
+                <div class="logregcon" id="tablogin">
+                	<h3 style="padding-bottom:1rem;text-indent: 3rem;">会员登录</h3>
+                   	<form action="" method="post" name="logform" class="form-horizontal"> 
+					  	<div class="form-group">
+						    <label class="control-label col-md-2 col-sm-2" for="username">用户名</label>
+						    <div class="input-group col-md-6 col-sm-6" style="float: left;">
+							    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							    <input type="text" class="form-control" id="username" name="username" autofocus required placeholder="用户名为5-22个字符" maxlength="22" >
+							</div>
+					  	</div>
+					  	<div class="form-group">
+						    <label class="control-label col-md-2 col-sm-2" for="password" >密&nbsp;&nbsp;码</label>
+						    <div class="input-group col-md-6 col-sm-6" style="float: left;">
+							    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							    <input type="password" class="form-control" id="password" name="password"  required placeholder="密码为5-12个字符" maxlength="12">
+							</div>			    
+					  	</div>
+					  	<div class="form-group">
+	                        <label class="control-label col-md-2 col-sm-2" for="name">验证码</label>
+	                        <div class="input-group col-md-3 col-sm-3" style="float: left;">
+	                        	<span class="input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+	                          	<input type="text" id="captcha" name="captcha" class="form-control col-md-7 col-xs-12" placeholder="请输入验证码" required maxlength="{$Think.config.captcha.length}" pattern="[A-z0-9]{4}">
+	                        </div>
+	                        <div class="col-md-3 col-sm-3">						
+								<a href="javascript:void(0)" title="点击切换验证码" onclick="document.getElementById('yzpiclog').src='{:captcha_src()}?id='+Math.random() ">
+									<img src="{:captcha_src()}" alt="captcha" id="yzpiclog">
+								</a>
+						  	</div>
+	                    </div>
+					  	<div class="form-group">
+						  	<div class="checkbox row">
+							 	<label class="col-md-3 col-md-offset-2">
+							 		<input type="checkbox" name="autologin" value="7">一周内自动登录
+							 	</label>
+							 	<a class="col-md-3 col-md-offset-2" href="javascript:void(0);">忘记密码？</a>
+						  	</div>
+					  	</div>						  	
+					  	<div class="form-group">
+					  		<div class="col-md-offset-2 col-md-6">
+						  		<input type="hidden" name="preurl" value="{$Think.server.http_referer}">
+						     	<button type="submit" id="logbtn" class="btn btn-primary btn-block btn-lg" > 登录 </button>
+						     	<p style="text-align: center;margin-top: 2rem;"><a href="{:url('index/login/register')}">还没账号？立即注册</a></p>
+					     	</div>
+					    </div>
+					</form>
+                </div>
+	        </div>
+	    </section>
+	</main>
+	<footer id="bottom">
+		<div class="container">
+			{include file="public/footer" /}
+		</div>
+	</footer>
+
+	<!--侧边悬浮框-->
+	{include file="public/fixnav" /}
+	{js file="__PUBLIC__/static/common/bootstrap/js/bootstrap.min.js" /}
+	{js file="__PUBLIC__/static/common/nprogress/nprogress.js" /}
+	{js file="__PUBLIC__/static/common/bootstrap_validate.js" /}
+	<script>
+		//表单验证         
+		checkform($("form[name=logform]"));
+	</script>
+	
+</body>
+</html>

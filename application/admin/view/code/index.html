@@ -1,0 +1,16 @@
+{extend name="public/base" /}
+
+{block name="title"}qrcode{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p><a href="{:url('admin/code/createQrcode')}">createQrcode</a></p>
+	<p><a href="{:url('admin/code/getQrcode')}">getQrcode</a></p>
+	<p><a href="{:url('admin/code/qrcodeWithLogo')}">qrcodeWithLogo</a></p>
+	<p><a href="{:url('admin/code/test')}">test</a></p>
+	<p><a href="{:url('admin/code/endroid')}">endroid</a></p>
+	<p><a href="{:url('admin/code/endroidWithLogo')}">endroidWithLogo</a></p>
+{/block}

@@ -1,0 +1,121 @@
+{extend name="public/base" /}
+
+{block name="title"}博文列表模板文件源码{/block}
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('blog/bloglist')}">博文管理</a> > 博文列表</p>
+	
+<div class="container-fluid">
+	<div class="row">
+		<ul class="list-inline col-md-4">
+			<li><a class="btn btn-success" href="{:url('addblog')}">新增博文</a></li>
+			<li><input type="submit" class="btn btn-success" value="批量删除" form="bloglistform"></li>
+			<li><a class="btn btn-success" href="javascript:void(0)" onclick="downloadexcel()">下载列表excel</a></li>
+		</ul>
+
+		<div class="container-fluid col-md-6 col-md-offset-2" >
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="catename" class="control-label">选择栏目:</label>
+					<select name="catename" class="form-control">
+						<option>全部栏目</option>
+						{volist name="cate" id="vo"}
+							<option>{$vo.catename}</option>
+						{/volist}
+					</select>
+				</div>
+				<div class="form-group">
+					<div class="input-group">			    		
+			     		<input type="text" id="titlekeyword" class="form-control" placeholder="标题关键字...">
+			        	<div class="input-group-btn">
+				        	<button class="btn btn-primary searchbtn" type="button" title="搜索">
+				        		<span class="glyphicon glyphicon-search"></span>
+				        	</button>
+			      		</div>
+			    	</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div>
+		<form action="{:url('blog/deleteblog')}" method="post" name="bloglistform" id="bloglistform"  onsubmit="return confirm('确定要删除吗？')" class="table-responsive">	
+			<table class="listtab table table-striped table-bordered table-hover table-condensed">
+				<tr class="thead">
+					<th><input type="checkbox" ></th>
+					<th><a href="{:url('blog/bloglist',['field'=>'bid','order'=>'asc'])}" title="bid升序" >ID</a></th>
+					<th>标题</th>
+					<th>所属栏目</th>
+					<th>缩略图</th>
+					<th><a href="{:url('blog/bloglist',['field'=>'click','order'=>'desc'])}" title="click降序">点击量</th>
+					<th><a href="{:url('blog/bloglist',['field'=>'time','order'=>'desc'])}" title="time降序">发布时间</a></th>
+					<th >评论</th>
+					<th >操作</th>
+				</tr>
+				{volist name="blog" id="vo"}
+					<tr>
+						<td><input type="checkbox" name="bid{$vo.bid}" value="{$vo.bid}"></td>
+						<td>{$vo.bid}</td>
+						<td>{$vo.title}</td>
+						<td>{$vo.catename}</td>
+						<td>
+							{if condition="$vo.pic eq ''"}暂无缩略图
+							{else/}<img src="__PUBLIC__/static/uploads/{$vo.pic|strstr=' '|trim}" title="{$vo.picdesc}" height="50" />
+							{/if}
+						</td>
+						<td>{$vo.click}</td>
+						<td>{$vo.time|date='Y-m-d',###}</td>
+						<td></td>
+						<td>
+							<a class="btn btn-info" href="{:url('index/article/index',['bid'=>$vo.bid])}" target="_blank">查看</a>
+							<a class="btn btn-info" href="{:url('editorblog',['bid'=>$vo.bid])}">修改</a> 
+							<a class="btn btn-warning" href="{:url('deleteblog',['bid'=>$vo.bid])}" onclick="return confirm('确定要删除该博文吗？')">删除</a>
+						</td>
+					</tr>
+				{/volist}
+			</table>
+		</form>
+		{//$blog->render()}
+	</div>
+</div>
+<script>
+	function downloadexcel(){  
+		$.post("{:url('blog/blogphpexcel','','')}",function(data){
+			if(data.status==1){
+				window.location.href='__PUBLIC__/static/excel/'+data.downpath;
+			}
+		},'json');		
+	};
+
+	//按栏目筛选
+	$('select[name=catename]').change(function(){
+		var catename = $(this).val();
+		$('tr:not(.thead)').show();
+		if(catename !== '全部栏目'){
+			$('tr:not(.thead)').each(function(){
+				var match = $(this).children().eq(3).text();
+				if(match !== catename){
+					$(this).hide();
+				}
+			});
+		}		
+	});
+
+	//按照标题关键词筛选
+	$('#titlekeyword').keyup(function(){
+		var titlekeyword = $(this).val(); 
+		if(titlekeyword){ 
+			$('tr:not(.thead)').each(function(){
+				var match = $(this).children().eq(2).text();
+				var result = match.search(titlekeyword);
+				if(result != -1){
+					$(this).css('background','rgba(146,221,73,.3)');
+				}
+			});
+		}			
+	});
+</script>
+{/block}

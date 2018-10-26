@@ -1,0 +1,15 @@
+{extend name="public/base" /}
+
+{block name="title"}记录日志模板文件源码{/block}
+
+{block name="cssjs"}
+	{css href="__PUBLIC__/static/admin/css/base.css" /}
+{/block}
+{block name="ueditor"}{/block}
+
+{block name="section"}
+	<p class="welcome"><a href="{:url('admin/index/index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> > <a href="{:url('log/index')}">登录日志</a> > 日志管理</p>
+	<div class="wrap">
+	登录日志列表：id,用户名，密码（*），状态(登录失败标红)，类型（前台后台登录），时间，ip，地址，说明（登录错误或成功提示）
+	</div>
+{/block}

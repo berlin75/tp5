@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="{$Think.config.webinfor.keyword}">
+<meta name="description" content="{$Think.config.webinfor.description}">
+<meta name="Author" content="{$Think.config.webinfor.webname}">
+<meta name="renderer" content="webkit">
+<meta name="baidu_union_verify" content="{$Think.config.webinfor.baiduu}">
+<meta name="google-site-verification" content="{$Think.config.webinfor.googlev}">
+<meta name="baidu-site-verification" content="{$Think.config.webinfor.baiduv}">
+<meta name="sogou_site_verification" content="{$Think.config.webinfor.sogouv}">
+<meta name="360-site-verification" content="{$Think.config.webinfor.360v}">
+<link rel="shortcut icon" href="__PUBLIC__/static/favicon.ico" />
+<link rel="bookmark" href="__PUBLIC__/static/favicon.ico" type="image/x-icon"/>
+<title>{$Think.config.webinfor.webname}</title>
+{js file="__PUBLIC__/static/common/jquery-3.1.1.js" /}
+{css file="__PUBLIC__/static/common/bootstrap/css/bootstrap.min.css" /}
+{css href="__PUBLIC__/static/index/css/base.css" /}
+{css href="__PUBLIC__/static/index/css/index.css" /}
+</style>
+<!--百度统计-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?71238d5d26321ca3a21a98fce0ad7ecd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+	<header id="top">
+		{include file="public/nav" /}
+	</header>
+	<main>
+		<section>
+		 	<ul class="banner">
+		 		<li id="banner1">
+		 			<div class="banner-body">
+		 				<h1>李宗盛</h1>
+		 				<h3>
+		 					<span>有人问我你究竟是哪里好</span>
+							<span>这么多年我还忘不了</span>
+							<span>春风再美也比不上你的笑</span>
+							<span>没见过你的人不会明了</span>
+						</h3>
+		 				<p><a class="banner-link" href="{:url('article/index',['bid'=>25])}" title="李宗盛-鬼迷心窍">了解详情</a></p>
+		 			</div>
+		 		</li>
+		 		<li id="banner2">
+		 			<div class="banner-body">
+		 				<h1>罗大佑</h1>
+		 				<h3>
+		 					<span>乌溜溜的黑眼珠和你的笑脸</span>
+							<span>怎么也难忘记你容颜的转变</span>
+							<span>轻飘飘的旧时光就这么溜走</span>
+							<span>转头回去看看时已匆匆数年</span>
+						</h3>
+		 				<p><a class="banner-link" href="{:url('article/index',['bid'=>26])}" title="罗大佑-恋曲1990">了解详情</a></p>
+		 			</div>
+		 		</li>
+		 		<div class="banner-btn">
+	 				<span id="banner-btn1" class="banner-btn-active"></span>
+	 				<span id="banner-btn2" class="banner-btn-default"></span>
+	 			</div>
+		 	</ul>
+			<div class="content-body">
+				<div class="container">
+					<ul class="list-ul">
+						<li>
+							<div class="title-time">
+								<h3><a href="####" title="明心见性的一段对话">明心见性的一段对话</a></h3>
+								<small>2017年6月10日</small>
+							</div>
+							<div class="desc-pic row">				
+							    <div class="col-md-3">
+							    	<a href="####" title="明心见性的一段对话">
+							       		<img src="__PUBLIC__/static/index/image/1.jpg" class="list-img" alt="文章缩略图" title="文章缩略图" />
+							        </a>
+							    </div>
+								<div class="col-md-9" >
+									以下是我和妹子萌萌的一段对话，希望我们都能一直保持平常心，认真做自己，开心过好每一天……
+									<div class="text-right">
+										<a class="btn btn-success" href="####" title="明心见性的一段对话">阅读全文 ></a>
+									</div>
+								</div>
+							</div>
+							<div class="art-tags"><span class="glyphicon glyphicon-tags " style="color: red;"> Tags:</span>
+								觉悟 生活 人生 规则
+							</div>
+							<div class="art-info">
+								<span>发布：圈圈 | 分类：如是观 | 评论：23 | 浏览：234 |</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<div class="flink">
+			<div class="container">
+				<div class="flink-title">[友情链接]</div>
+				<ul class="list-inline">
+					{volist name="flink" id="vo"}
+						<li><a href="{$vo.urlpath}" target="_blank" title="{$vo.urldesc}" >{$vo.title}</a></li>
+					{/volist}
+				</ul>
+			</div>
+		</div>
+	</main>
+
+	<footer id="bottom">
+		<div class="container">
+			{include file="public/footer" /}
+		</div>
+	</footer>
+
+	<!--侧边悬浮框-->
+	{include file="public/fixnav" /}  
+
+	{js file="__PUBLIC__/static/common/bootstrap/js/bootstrap.min.js" /}
+	
+	<script>
+		function change(){
+			$('#banner1').toggle();
+			$('#banner2').toggle();
+			$('#banner-btn1').toggleClass('banner-btn-active');
+			$('#banner-btn1').toggleClass('banner-btn-default');
+			$('#banner-btn2').toggleClass('banner-btn-active');
+			$('#banner-btn2').toggleClass('banner-btn-default');
+		}
+		var timer=setInterval(change,3000);
+		$('.banner').hover(function(){clearInterval(timer);},function(){timer=setInterval(change,3000);});
+		$('#banner-btn1').click(function(){change();});
+		$('#banner-btn2').click(function(){change();});
+	</script>
+</body>
+</html>

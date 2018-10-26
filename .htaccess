@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+
+  #方法一、Should use vardump in Query,?vardump
+  #RewriteCond %{QUERY_STRING} vardump
+  #RewriteRule (.*) http://www.baidu.com/?script_filename=%{SCRIPT_FILENAME},request_filename=%{REQUEST_FILENAME} [R=302,L,QSA]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+</IfModule>
